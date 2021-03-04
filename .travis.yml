@@ -31,6 +31,6 @@ deploy:
   github_token: 036b86733077a38d2747709b47f1996a35a71ccc  # Set in the settings page of your repository, as a secure variable
   keep_history: true
   local_dir: _site
-  target_branch: gh-pages
+  target_branch: main
   on:
-    branch: master
+    branch: main
