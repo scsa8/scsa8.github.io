@@ -24,11 +24,11 @@ script:
     rm -f jekyll.pid
 branches:
   only:
-    - master
+    - main
 deploy:
   provider: pages
   skip_cleanup: true
-  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  github_token: 036b86733077a38d2747709b47f1996a35a71ccc  # Set in the settings page of your repository, as a secure variable
   keep_history: true
   local_dir: _site
   target_branch: gh-pages
