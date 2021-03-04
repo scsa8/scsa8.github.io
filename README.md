@@ -1,4 +1,4 @@
-#로컬 환경 설정
+# 로컬 환경 설정
 
 ## 루비 설치
 https://rubyinstaller.org/downloads/ 
