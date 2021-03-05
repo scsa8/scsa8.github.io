@@ -6,7 +6,7 @@ categories: Oracle Database
 author: "Dev. Hoon"
 ---
 
-# DB 개발 및 운영을 하며 때때로 마주치는 OBJECT INVALID 상태 처리 방법
+DB 개발 및 운영을 하며 때때로 마주치는 OBJECT INVALID 상태 처리 방법
 
 *****
 
