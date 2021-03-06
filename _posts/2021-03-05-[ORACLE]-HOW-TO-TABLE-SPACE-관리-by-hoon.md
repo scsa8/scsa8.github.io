@@ -18,7 +18,7 @@ DB 운영자의 필수 코스. TBS 관리를 알아보자.
 
 이 TBS는 논리적인 공간이다. 실제 서버에서는 TBS에 해당하는 물리적인 데이터들이 데이터 파일에 나뉘어 담긴다. 보통은 1개 TBS에 1개 데이터 파일을 사용하지만, TBS가 커질수록 데이터 파일은 늘어날 수 있다.
 
-![file1_data_structure_of_oracle](/assets/images/hoon/20210306/file1_data_structure of oracle.gif "data structure of oracle")
+![file1_data_structure_of_oracle](/assets/images/hoon/20210306/file1_data_structure_of_oracle.gif "data structure of oracle")
 ----------------------------
 oracle document 참조
 
