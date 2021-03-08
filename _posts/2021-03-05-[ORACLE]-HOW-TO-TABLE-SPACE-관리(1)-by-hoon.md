@@ -2,7 +2,8 @@
 layout: post
 title: "[Oracle] How_To TBS 관리방법(1)"
 description: "Oracle Trouble Shooting How to No.2"
-categories: Oracle Database
+categories: 
+    - Oracle Database
 author: "Dev. Hoon"
 ---
 

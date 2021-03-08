@@ -2,7 +2,8 @@
 layout: post
 title: "[Oracle] How_To INVALID Object 처리방법"
 description: "Oracle Trouble Shooting How to No.1"
-categories: Oracle Database
+categories: 
+    - Oracle Database
 author: "Dev. Hoon"
 ---
 

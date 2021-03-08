@@ -2,7 +2,9 @@
 layout: post
 title: "깃(Git) 쪽집게 정리"
 description: "현업에서 쓰는 깃 관련 개념과 커맨드만 속성으로 알아본다."
-categories: Dev 형상관리 Git
+categories: 
+  - Dev Tool
+tags: ["Dev. Sol", "GIT", "형상관리"]
 author: "Dev. Sol"
 ---
 
