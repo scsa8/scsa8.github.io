@@ -132,9 +132,8 @@ public class UserServiceValidator {
 }
 ```
 위와 같이 @Aspect 어노테이션으로 AOP를 사용할 것이라고 스프링에 알려주고 createUser라는 method를 만든다.<br>
-UserService의 createUser 전에 이 메소드를 항상 호출하고 싶으므로
-@Before("execution(* com.sol.solapp.user.service.UserService.createUser(..)) && args(dto)") 와 같이 어노테이션을 달아준다.<br>
-@Before은 ~전에 호출하라는 의미이고, ~ 전에의 목적이 되는 method를 의미한다(패키지명부터 method명까지 모두 써줘야한다). args는 해당 method도 들어오는 parameter들을 써주면 된다.
+UserService의 createUser 전에 이 메소드를 항상 호출하고 싶으므로 @Before("execution(* com.sol.solapp.user.service.UserService.createUser(..)) && args(dto)") 와 같이 어노테이션을 달아준다.<br>
+@Before은 ~전에 호출하라는 의미이고, excution은 ~전에의 목적이 되는 method를 의미한다(패키지명부터 method명까지 모두 써줘야한다). args는 해당 method도 들어오는 parameter들을 써주면 된다.
 
 이렇게 하면 UserServiceImpl 외부에서 createUser를 호출하면 UserServiceValidator의 createUser부터 실행된다. 주의할 점은 같은 클래스 내에서 호출할 때에는 적용되지 않는다라는 것이다.
 
