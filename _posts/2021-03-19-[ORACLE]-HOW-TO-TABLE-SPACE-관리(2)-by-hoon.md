@@ -8,7 +8,7 @@ author: "Dev. Hoon"
 tags: ["Dev. Hoon","Oracle"]
 ---
 
-    
+[지난 포스트 Link](https://scsa8.github.io/oracle%20database/2021/03/05/ORACLE-HOW-TO-TABLE-SPACE-%EA%B4%80%EB%A6%AC(1)-by-hoon/, "지난 포스트")
 
 지난 POST에서는 TABLE SPACE가 무엇인지 간단히 보았고, 조회방법을 소개했다. 이제는 문제가된 TABLE SPACE를 처리할 차례이다.
 
@@ -39,13 +39,12 @@ select * from dba_data_files;
 ```
 위 쿼리를 수행하면 현재 사용하는 DATA FILE들의 정보를 얻을 수 있는데, 그중 일부를 보면 다음과 같다.
 
-FILE_NAME|TABLESPACE_NAME|BYTES|BLOCKS|STATUS
----|---|---|---|---
-+DATA/FEWN1POD/B1911729F0C7A5DEE0530918000AC5BD/DATAFILE/system.840.1053708115|SYSTEM|745537536|91008|AVAILABLE
-+DATA/FEWN1POD/B1911729F0C7A5DEE0530918000AC5BD/DATAFILE/sysaux.768.1053708115|SYSAUX|4965269504|606112|AVAILABLE
+FILE_NAME|TABLESPACE_NAME
+---|---
++DATA/FEWN1POD/B1911729F0C7A5DEE0530918000AC5BD/DATAFILE/system.840.1053708115|SYSTEM
++DATA/FEWN1POD/B1911729F0C7A5DEE0530918000AC5BD/DATAFILE/sysaux.768.1053708115|SYSAUX
 
-FILE_NAME은 결국 이 FILE이 어디에 있는 어떤 파일인지를 알려준다. TABLE SPACE NAME은 이 파일이 어떤 TBS에 속해있는지를 보여주며, 이 파일의 사이즈도 친절하게 BYTES와 BLOCKS로 알려준다.
-
+FILE_NAME은 결국 이 FILE이 어디에 있는 어떤 파일인지를 알려준다. TABLE SPACE NAME은 이 파일이 어떤 TBS에 속해있는지를 보여준다. 
 
 ### 1. DATA FILE의 사이즈 변경
 
@@ -64,7 +63,7 @@ ALTER DATABASE DATAFILE '[DataFile Path & Name]'  AUTOEXTEND ON MAXSIZE UNLIMITE
 ```
 앞서 Table Space는 논리적인 공간이라고 말했다. 이렇게 할경우, 논리적인 제한이 없어진다. 이제 DATA FILE은 DATAFILE이 있는 운영체제와 DATAFILE이 허용하는 한계까지 쭉 자동으로 늘어난다. 야호!  
 다만...진짜 자동으로 끝까지 늘어나버렸다가는 곤란할 수 있다. 서버의 스토리지에는 DATAFILE 뿐만 아니라 rollback이나 undo 영역, temp TBS도 같이 저장되어 있기 때문에...서버 스토리지를 데이터 파일이 다 먹으면 문제가 생길 수 있다. 그래서 보통은 이렇게 하면 안된다. 
-> 참고로, 0번의 쿼리를 수행하면 해당 DataFile이 AutoExtend가 가능한지, 최대치는 얼마인지, 한번에 얼마씩 늘리는지 등을 다 볼 수 있다. 그대로 써져있으니 어렵지 않게 볼수 있다.  
+> 참고로, 0번의 쿼리를 수행하면 해당 DataFile이 현재 어느정도 사이즈인지, AutoExtend가 가능한지, 최대치는 얼마인지, 한번에 얼마씩 늘리는지 등을 다 볼 수 있다. 그대로 써져있으니 어렵지 않게 볼수 있다.  
 
 
 ### 3. DATA FILE 추가 
@@ -80,7 +79,7 @@ ALTER TABLESPACE [TableSpaceName] ADD DATAFILE '[DataFile Path & Name]' SIZE [Si
 
 --------------------
 
-## 2) 사용하지 않는 테이블 TRUNCATE, DROP
+## 2. 사용하지 않는 테이블 TRUNCATE, DROP
 
 공간을 할당하는 것보다는 현실적이다.  
 의외로, TBS를 차지하는 object들을 보다보면, **'왜 이런게 있지?'** 라는 의문이 드는 객체들이 있다. 모종의 이유로 생성되었다가 특정한 이유가 있어서 삭제하지 않았거나 관리되지 않는 객체들이다. 이들을 발견한다면 TRUNCATE와 DROP으로 할당된 TBS를 회수해주자.
@@ -102,7 +101,7 @@ DROP INDEX [IndexName]; -- INDEX의 경우
 --------------------
 
 
-## 3) 객체를 REORG 하는 것 
+## 3. 객체를 REORG 하는 것 
 실제로 DB 운영자가 TBS 부족시 가장 많이 하는 작업이다.  
 객체의 REORG는 결국 **만들어진 객체들의 공간을 처음부터 다시 계산해서 만드는 것**이다. DROP후 재생성하거나, TRUNCATE 한 후에 데이터를 다시 넣는 등 object를 아예 다시 만드는 것과 동일하지만, 당연히 훨씬 안전하다.
 
@@ -119,7 +118,7 @@ ALTER INDEX [IndexName] REBUILD TABLESPACE [TableSpaceName]; -- Index의 경우
  구문이 작동 안할수도 있고 심각한 성능장애가 발생할 수 있다.
 
 ​
-
+### 주의사항 1. partitioning 고려
 - 위 코드에서 **PARTITION과 SUBPARTITION은 고려되지 않았다.**
 
 만약 partition (또는 subpartition)된 TABLE/INDEX일 경우, 나누어진 partition들을 일일이 옮겨주어야 한다. 
@@ -140,17 +139,18 @@ ALTER INDEX [IndexName] MODIFY DEFAULT ATTRIBUTES TABLESPACE [TableSpaceName];
 ```
 어쨋든, PARTITION이나 SUBPARTITION 된 테이블을 REORG하고 싶다면, 개별 PARTITION들에 대한 REBUILD를해주어야한다.
 
+### 주의사항 2. 특수 column 고려
 - **LONG과 LOB 컬럼이 포함된 객체는 MOVE/REBUILD 되지 않는다.**
 
 LONG 컬럼과 LOB 컬럼이 있으면 move, rebuild 되지 않는다. 
 
 불행인지 다행인지 필자가 맡고 있는 시스템은 LONG과 LOB이 컬럼이 있는 테이블을 다룰 일이 없었다. 정확히 모르기도하고, 추가로 더 설명하자니 너무 복잡해 잘 설명하신분의 LINK를 덧붙이고 넘어가겠다.
 
-https://m.blog.naver.com/itisksc/30046151502
+<https://m.blog.naver.com/itisksc/30046151502>
 
 
  
-
+### 주의사항 3. 통계정보와 plan 고려
 - <text style='color:red; font-size:20px;'> STAISTICS 정보가 어그러져 PLAN이 바뀐다.</text>
 
 막 작업하면 안되는 가장 중요한 이유이다. **OBJECT를 REBUILD하면 통계정보가 싹 사라진다.**
