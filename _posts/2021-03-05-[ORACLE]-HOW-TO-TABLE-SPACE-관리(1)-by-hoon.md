@@ -5,6 +5,7 @@ description: "Oracle Trouble Shooting How to No.2"
 categories: 
     - Oracle Database
 author: "Dev. Hoon"
+tags: ["Dev. Hoon","Oracle"]
 ---
 
 DB 운영자의 필수 코스. TBS 관리를 알아보자.
@@ -31,14 +32,14 @@ oracle document 참조
 
 오라클의 경우 다음 에러가 발생한다. 
 
-```SQL
+```sql
 ORA-1653: unable to extend table [TableName] by 4096 in tablespace [TableSpaceName] 
 ```
 
 위 에러가 발생하는데는 여러 이유가 있을 수 있다.
 에러를 그대로 해석하면, TBS에서 Extend가 불가능하다고 했다.
 
-그 말인 즉슨, Extend할 공간이 없어서 불가한 것일 수 있지만, 자동 Extend 가 불가하거나 Object의 MAX Extend에 도달해서 그런 것일 수 있다.
+그 말인 즉, Extend할 공간이 없어서 불가한 것일 수 있지만, 자동 Extend 가 불가하거나 Object의 MAX Extend에 도달해서 그런 것일 수 있다.
 
 다만, DBA에 의해 잘 관리되고 있는 DB라면 보통 Object의 Max는 Unlimited로 주는경우가 많고 EXTEND에 대한 옵션이 이미 정리되어 있을 것이기에, 대부분의 경우 실제로 **TBS가 부족한 것**이다.
 ​
@@ -49,7 +50,7 @@ TBS로 인한 에러가 발생했다면, DB 데이터에 입력이 멎어버리�
 
 이를 위해 다음 쿼리를 사용할 수 있다.
 
-```SQL
+```sql
 select a.tablespace_name as tbs,
         round(sum(a.total1)/1024/1024/1024,1) "TotalGB",
         round(sum(a.total1)/1024/1024/1024,1)-round(sum(a.sum1)/1024/1024/1024,1) "UsedGB",
@@ -71,9 +72,9 @@ order by tbs;
 
 위 쿼리를 사용시, TBS별로 전체 사이즈 (GB 기준), 사용량, 잔여량, 사용 %까지 깔끔하게 확인할 수 있다.
 
-＊ 주의사항
+> 주의사항
 
-    - DBA 시스템 VIEW를 사용하기에 권한이 없는 경우 조회할 수 없다. 권한이 없다면 USER SYSTEM VIEW를 사용할것.
+- DBA 시스템 VIEW를 사용하기에 권한이 없는 경우 조회할 수 없다. 권한이 없다면 USER SYSTEM VIEW를 사용할것.
   
     
 

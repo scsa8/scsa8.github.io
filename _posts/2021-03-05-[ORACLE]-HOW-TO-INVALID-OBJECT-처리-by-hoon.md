@@ -5,6 +5,7 @@ description: "Oracle Trouble Shooting How to No.1"
 categories: 
     - Oracle Database
 author: "Dev. Hoon"
+tags: ["Dev. Hoon","Oracle"]
 ---
 
 DB 개발 및 운영을 하며 때때로 마주치는 OBJECT INVALID 상태 처리 방법
@@ -38,7 +39,7 @@ ORACLE의 경우, 자동 컴파일을 지원한다. 컴파일 에러가 나지 �
 
 ​다음은 다양한 OBJECT들에 대해 한 번에 조회하고 컴파일 할 수 있는 쿼리를 생성해 주는 쿼리이다.
 
-```SQL
+```sql
 SELECT
 'alter '||DECODE(object_type,'PACKAGE BODY', 'PACKAGE',object_type)||' '
 ||owner||'.'||object_name||'compile'||DECODE(object_type,'PACKAGE BODY',' body;',';')
@@ -46,9 +47,9 @@ FROM DBA_OBJECTS
 WHERE object_type in ('VIEW', 'FUNCTION', 'PACKAGE', 'PACKAGE BODY', 'PROCEDURE', 'TRIGGER', 'SYNONYM')
 AND status = 'INVALID';
 ```
-* ＊주의사항
-    - DBA_OBJECTS라는 SYSTEM VIEW를 사용하므로, DBA_OBJECTS를 조회할 수 없는 경우엔 USER_OBJECTS를 사용하면 된다.
+> 주의사항
+- DBA_OBJECTS라는 SYSTEM VIEW를 사용하므로, DBA_OBJECTS를 조회할 수 없는 경우엔 USER_OBJECTS를 사용하면 된다.
 
-    - 단 USER_OBJECTS는 현재 로그인한 USER의 OBJECT만 보여준다. DEPENDENCY가 타 계정까지 연결되어 INVALID된 경우, 다른 계정에서 다시 찾아야 한다.
+- 단 USER_OBJECTS는 현재 로그인한 USER의 OBJECT만 보여준다. DEPENDENCY가 타 계정까지 연결되어 INVALID된 경우, 다른 계정에서 다시 찾아야 한다.
 
 ​
