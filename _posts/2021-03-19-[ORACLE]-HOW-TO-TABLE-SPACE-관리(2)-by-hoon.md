@@ -13,32 +13,25 @@ tags: ["Dev. Hoon","Oracle"]
 지난 POST에서는 TABLE SPACE가 무엇인지 간단히 보았고, 조회방법을 소개했다. 이제는 문제가된 TABLE SPACE를 처리할 차례이다.
 
 -------------------
-<br>
 
 
-## TBS 정리가 필요할때, 방법을 나누면 크게 세가지이다.
-
+# TBS 정리방법
+주로 쓰는 방법은 크게 3가지이다.
 1. 공간을 추가 할당하거나
-
-2. 아예 삭제하고 재 생성하던가
-
+2. 안쓰는 객체를 지워 공간을 반환하거나
 3. 객체들을 REBUILD 하는 것이다.
 
 --------------------
  ​
 
-## 1) 공간을 추가로 할당하는 방법
-<br>
-
+## 1. 공간을 추가로 할당하는 방법
 > PC를 사용하다 용량이 부족하면 HDD/SSD를 업그레이드 하거나 증설한다. DB도 마찬가지이다.
-
-<br>
 
 TBS는 결국 **DATAFILE**이라는 물리적 공간에 기록되는 데이터의 크기를 **논리적으로 제한**하는 것이다.
 이를 처리하는 방법으로 크게 3가지 방법이 있다.  
 <br>
 
- 0. 먼저, 현재 사용하는 DATA FILE을 확인하자.*
+ ### 0. 현재 사용하는 DATA FILE을 확인하자.
 
 
 ```sql
@@ -46,27 +39,25 @@ select * from dba_data_files;
 ```
 위 쿼리를 수행하면 현재 사용하는 DATA FILE들의 정보를 얻을 수 있는데, 그중 일부를 보면 다음과 같다.
 
-FILE_NAME|FILE_ID|TABLESPACE_NAME|BYTES|BLOCKS|STATUS
----|---|---|---|---|---
-+DATA/FEWN1POD/B1911729F0C7A5DEE0530918000AC5BD/DATAFILE/system.840.1053708115|2186|SYSTEM|745537536|91008|AVAILABLE
-+DATA/FEWN1POD/B1911729F0C7A5DEE0530918000AC5BD/DATAFILE/sysaux.768.1053708115|2187|SYSAUX|4965269504|606112|AVAILABLE
+FILE_NAME|TABLESPACE_NAME|BYTES|BLOCKS|STATUS
+---|---|---|---|---
++DATA/FEWN1POD/B1911729F0C7A5DEE0530918000AC5BD/DATAFILE/system.840.1053708115|SYSTEM|745537536|91008|AVAILABLE
++DATA/FEWN1POD/B1911729F0C7A5DEE0530918000AC5BD/DATAFILE/sysaux.768.1053708115|SYSAUX|4965269504|606112|AVAILABLE
 
-<br>
 FILE_NAME은 결국 이 FILE이 어디에 있는 어떤 파일인지를 알려준다. TABLE SPACE NAME은 이 파일이 어떤 TBS에 속해있는지를 보여주며, 이 파일의 사이즈도 친절하게 BYTES와 BLOCKS로 알려준다.
-<br>
-<br>
 
 
-1. ###  현재 사용하는 DATA FILE의 사이즈를 늘리는  방법
+### 1. DATA FILE의 사이즈 변경
 
 ```sql
 ALTER DATABASE DATAFILE '[DataFile Path & Name]' RESIZE [Size];
 ```
+사용중인 DATAFILE의 사이즈를 변경해준다.   
 DataFile Path & Name은 0번에서 수행한 쿼리에 나오는 FileName을 넣어주면 된다. 
 위 FILENAME은 오라클 CLOUD이기 때문에 생소한 주소이지만, 일반적으로는 **'C:\ORACLE\ORADATA\ORACLE\SYSTEM01.DBF'** 이런식이다.  
 사이즈는 기본 BYTE 단위이며, M, K 등을 붙이면 MB, KB로 인식한다. 500M이라 적으면 500MB로 변경될 것이다.
 
-2. ### 현재 사용하는 DATA FILE의 최대치를 늘리는 방법 & 자동으로 늘어나게 하는 방법
+### 2. DATA FILE의 최대치 늘리기 & 자동으로 늘어나게 하기
 
 ```sql
 ALTER DATABASE DATAFILE '[DataFile Path & Name]'  AUTOEXTEND ON MAXSIZE UNLIMITED;
@@ -75,9 +66,8 @@ ALTER DATABASE DATAFILE '[DataFile Path & Name]'  AUTOEXTEND ON MAXSIZE UNLIMITE
 다만...진짜 자동으로 끝까지 늘어나버렸다가는 곤란할 수 있다. 서버의 스토리지에는 DATAFILE 뿐만 아니라 rollback이나 undo 영역, temp TBS도 같이 저장되어 있기 때문에...서버 스토리지를 데이터 파일이 다 먹으면 문제가 생길 수 있다. 그래서 보통은 이렇게 하면 안된다. 
 > 참고로, 0번의 쿼리를 수행하면 해당 DataFile이 AutoExtend가 가능한지, 최대치는 얼마인지, 한번에 얼마씩 늘리는지 등을 다 볼 수 있다. 그대로 써져있으니 어렵지 않게 볼수 있다.  
 
-<br>
 
-3. ### DATA FILE 추가 
+### 3. DATA FILE 추가 
 
 ```sql
 ALTER TABLESPACE [TableSpaceName] ADD DATAFILE '[DataFile Path & Name]' SIZE [Size];
@@ -89,8 +79,6 @@ ALTER TABLESPACE [TableSpaceName] ADD DATAFILE '[DataFile Path & Name]' SIZE [Si
 
 
 --------------------
-<br>
-
 
 ## 2) 사용하지 않는 테이블 TRUNCATE, DROP
 
@@ -110,8 +98,9 @@ DROP INDEX [IndexName]; -- INDEX의 경우
 줄줄이 **INVALID**가 날것이고 DB OBJECT들은 하나씩 뻗어버릴 것이며, 당신은 사유서를 써야할 것이다...
 > 사실, 오라클은 delete와 drop은 복구가 가능하다. 그러나 truncate는 무슨수를 써도 복구가 안된다. backup server의 backup된 이미지를 내려받는 것 외엔 불가능하다...  
 > backup 이미지를 요청하는 순간 이미 장애가 난것이나 다름없으니 truncate 사용은 항상 신중의 신중을 기하도록 하자.
+
 --------------------
-<br>
+
 
 ## 3) 객체를 REORG 하는 것 
 실제로 DB 운영자가 TBS 부족시 가장 많이 하는 작업이다.  
@@ -126,7 +115,7 @@ ALTER INDEX [IndexName] REBUILD TABLESPACE [TableSpaceName]; -- Index의 경우
 
 ​
 
-그런데, 단순히 이렇게는 작업하면 <text style='color:red; font-size:20px'>**절대 안된다.**</text>  
+그런데, 단순히 이렇게는 작업하면 <text style='color:red; font-size:20px'>절대 안된다.</text>  
  구문이 작동 안할수도 있고 심각한 성능장애가 발생할 수 있다.
 
 ​
@@ -150,8 +139,6 @@ ALTER TABLE [TableName] MODIFY DEFAULT ATTRIBUTES TABLESPACE [TableSpaceName];
 ALTER INDEX [IndexName] MODIFY DEFAULT ATTRIBUTES TABLESPACE [TableSpaceName];
 ```
 어쨋든, PARTITION이나 SUBPARTITION 된 테이블을 REORG하고 싶다면, 개별 PARTITION들에 대한 REBUILD를해주어야한다.
-<br>
-<br>
 
 - **LONG과 LOB 컬럼이 포함된 객체는 MOVE/REBUILD 되지 않는다.**
 
@@ -304,9 +291,8 @@ order by desc_col, ordervalue, name, partname;
 ```
 위 쿼리 수행시, 통계정보 백업테이블을 생성해주는 쿼리는 한번만 수행하도록 하자.
 
-<br>
 
-## 마치며
+# 마치며
 서두에 얘기한대로, TBS를 확보하는 세가지 방법을 알아보았다.  
 - DATAFILE을 늘리는 방법
 - 미사용 객체를 DROP, TRUNCATE 하는방법
@@ -325,7 +311,7 @@ order by desc_col, ordervalue, name, partname;
 
 그렇지 않다. DATA를 DELETE한다고 해서 공간이 새로 생겨나지 않는다. 이를 설명하려면 **block 구조와 HWM 개념에 대한 이해가 필요하다.** 이부분은 추가로 공부해서 (언젠가) 별도 포스트를 적어보겠다.
 
-​
+
 
   - 오라클은 10g 버전부터 SHRINK 기능을 지원한다. 
 
@@ -333,7 +319,7 @@ TBS 차지 양을 줄이고 Table Size를 컴팩트하게 줄여주는 새로운
 
 그러나 개인적으로는 이 기능을 사용하지 않는다. 가장 크리티컬한건, Parallel이 안되는 것이다. 위의 Reorg 쿼리는 parallel을 줄 수 있는 반면 Shrink는 아무 옵션도 줄 수 없다. 이 차이로, 실제 작업시간은 최소 2배~10배 가까이 생긴다. 서버의 코어수가 충분해야 parallel을 사용할 수 있겠지만, 대용량 테이블이라면 무조건 parallel 주는 rebuild가 빠르다.
 
-​
+
 
  - 위에도 얘기했지만 REORG 작업시에는 OBJECT가 INVALID된다.
   
