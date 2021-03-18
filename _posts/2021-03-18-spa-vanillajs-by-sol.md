@@ -243,7 +243,7 @@ export default class Header {
 }
 ```
 
-참고로 각 컴포넌트들은 Interative Developer님의 Canvas Practice 클론 코딩을 했던 내용들이다.
+참고로 각 컴포넌트들은 <a href='https://www.youtube.com/channel/UCdeWxKJuvtUG2xyN6pOJEvA'>Interative Developer</a>님의 Canvas Practice 클론 코딩을 했던 내용들이다.
 
 위 소스는 <a href='https://github.com/hsolemio-lee/vanilla-js-router'>vanilla-js-router</a>에서 확인해볼 수 있으며,<br>
 구현된 모습은 <a href='https://hsolemio-lee.github.io/vanilla-js-router'>여기</a>에서 확인할 수 있다.
