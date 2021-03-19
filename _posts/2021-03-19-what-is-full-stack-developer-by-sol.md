@@ -26,7 +26,7 @@ author: "Dev. Sol"
 
 음.. 한국에서의 의미는 너무나도 잘 알 것 같다. 좋은 글이다. 그렇다면 해외에서는 정말 어떤 의미로 쓰이고 있을까? 이를 설명해주는 좋은 글 하나를 찾았다(참고 - <a href="https://www.freecodecamp.org/news/how-to-become-a-full-stack-web-developer-in-2020/">How to Become a Full Stack Web Developer in 2020</a>). 읽어보면 좋을 것 같다. (서버리스나 JAMStack 아키텍쳐에 대한 얘기도 있는데 이건 다음에 꼭 포스팅해보고 싶은 주제이다.)
 
-자... 여기서 한가지 명심해야할 것은 제목에 Full Stack ***Web*** Developer라고 써있다는 점이다. 그리고 다른 글(참고 - <a href="https://www.freecodecamp.org/news/how-to-become-a-full-stack-web-developer-in-2020/">How to Become a Full Stack Developer: 6 Essential Tips</a>)을 보면 정말 모든 분야를 아우르는 개발자로 묘사했다. 물론 해외에서도 풀스택 개발자에 대한 논쟁이 있다고 한다(심지어 풀스택을 비난하는 이들도 있는가보다).
+자... 여기서 한가지 명심해야할 것은 제목에 Full Stack ***Web*** Developer라고 써있다는 점이다. Web분야로 한정하고 있는 것을 볼 수 있다. 그리고 다른 글(참고 - <a href="https://www.freecodecamp.org/news/how-to-become-a-full-stack-web-developer-in-2020/">How to Become a Full Stack Developer: 6 Essential Tips</a>)을 보면 정말 모든 분야를 아우르는 개발자로 묘사했다. 물론 해외에서도 풀스택 개발자에 대한 논쟁이 있다고 한다(심지어 풀스택을 비난하는 이들도 있는가보다).
 
 해외에서 의미하는 풀스택 개발자란 우리나라와 다를바 없어 보인다. 명확하게 하기 위해서 Full Stack Web Developer라고 명시하는게 좋을 것 같다. 해외에서 논쟁도 있는 것을 보면 풀스택 개발자는 누군가에게는 아니꼬울 수 있고 누군가에겐 환상이 될 수 있고, 누군가에겐 지향하는 바가 될 수 있는 듯 하다. 결국 개발자의 철학에 따라 달라질 수 있다는 것으로 보인다.
 
