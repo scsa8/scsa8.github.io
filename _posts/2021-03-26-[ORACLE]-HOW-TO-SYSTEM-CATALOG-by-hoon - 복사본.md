@@ -94,34 +94,56 @@ DBA 테이블이 정보를 다 보여주니 ALL%과 USER%는 생략하겠다. �
 
 
 1. DBA_OBJECTS : 모든 OBJECT들을 보여준다.  
-    - status : OBJECT가 사용가능하면 VALID, 아닐경우 INVALID로 표현된다.
-    - last_ddl_time : 해당 OBJECT가 마지막으로 DDL된 시간을 알려준다.
+    - STATUS : OBJECT가 사용가능하면 VALID, 아닐경우 INVALID로 표현된다.
+    - LAST_DDL_TIME : 해당 OBJECT가 마지막으로 DDL된 시간을 알려준다.
+<br/>
+
 2. DBA_TABLES : 모든 TABLE을 보여준다.
     - NUM_ROWS, BLOCKS, LAST_ANALYZED : DBA_OBJECTS에선 볼 수 있는, 이 테이블을 사용하는 이유인 중요한 이유중 하나다. 이 컬럼들을 보면 테이블에 통계정보가 있는지, 언제 생성된건지를 가늠할 수 있다.
     - DML_TIMESTAMP : 가장 최근에 DML이 일어난 시간을 알려준다.
+<br/>
+
 3. DBA_TAB_PARTITIONS, DBA_TAB_SUBPARTITIONS : PARTITION된 테이블이라면 테이블 자체는 사실 깡통이고 그 partition들의 상태를 보아야한다. 그때 사용하는 VIEW. DBA_TABLES VIEW와 요령은 같다.
+<br/>
+
 4. DBA_INDEXES, DBA_IND_PARTITIONS, DBA_IND_SUBPARTITIONS : 위의 TABLE과 같은 맥락으로, INDEX정보를 저장한다.
     - STATUS : 위의 테이블들은 STATUS가 {VALID, INVALID}로 발생하는데, INDEX는 {USABLE, UNUSABLE, N/A}로 발생한다.  
     N/A는 INDEX를 PARTITIONS 했을때나 PARTITONI된 INDEX를 다시 SUBPARTITON했을때 등 내부적으로 다시 쪼개질때 발생하는 값이다.
     - STATUS컬럼 다시 한번 더 강조한다. 보통 INVALID에 대한 체크는 DBA_OBJECTS 테이블로 체크하는데, PARTITION된 INDEX들은 거기서 안잡힌다. 매우중요.
+<br/>
+
 5. DBA_TAB_COLS : 모든 테이블의 컬럼을 보여준다.
+<br/>
+
 6. DBA_SEGMENTS : SEGMENT는 OBJECT를 구성하는 최소단위라고 보면 되겠다.
     - BYTES : SEGMENTS의 BYTES,말그대로 용량을 알려준다. TBS를 정리할때 타겟을 쉽게 찾을 수 있다.
+<br/>
+
 7. DBA_DEPENDENCIES : Object들 간의 DEPENDENCY를 보여준다. 영향도 파악을 위해 필수적인 VIEW.
     - REFERENCED_NAME : 참조 되는 OBJECT들이다.
     - NAME : 참조 하는 OBJECT이다.
+<br/>
+
 8. DBA_VIEWS : 모든 VIEW를 보여준다. 여기서 중요한점은, SYSTEM VIEW도 VIEW라는 것이다. SYS 계정의 VIEW를 찾으면 VIEW의 이름과 생성 쿼리를 얻을 수 있다.
+<br/>
+
 9. V\$SQL, V\$SQLAREA : 최근에 parsing된 SQL들이 저장되는 공간이다.
-    - sql_id : sql의 id값이다. 파싱을 하며 생성된 hash값으로, SQL이 정확히 같으면 같은 sql_id를 가진다.(공백 하나조차 같아야함.)
-    - plan_hash_value : 파싱을 하며 생성한 plan의 hashvalue이다. plan은 같은 SQLID라도 통계정보의 변동이나 DDL로 변경될 수 있다. 정확한 plan을 알기위해서는 해당 값을 알아야 한다.
-    - buffer_gets, executions, cpu_time, elapsed_time : 가장 기본적인 SQL 성능지표다. buffer는 읽은 block수, excutions는 해당 sql의 수행횟수, cpu_time은 연산시간이고, elapsed_time은 해당 SQL을 수행하는데 소요된 총 시간이다. 이 값들을 보면 어떤 SQL이 문제가 있는지 짐작할 수 있다.
+    - SQL_ID : sql의 id값이다. 파싱을 하며 생성된 hash값으로, SQL이 정확히 같으면 같은 sql_id를 가진다.(공백 하나조차 같아야함.)
+    - PLAN_HASH_VALUE : 파싱을 하며 생성한 plan의 hashvalue이다. plan은 같은 SQLID라도 통계정보의 변동이나 DDL로 변경될 수 있다. 정확한 plan을 알기위해서는 해당 값을 알아야 한다.
+    - BUFFER_GETS, EXCUTIONS, CPU_TIME, ELAPSED_TIME : 가장 기본적인 SQL 성능지표다. buffer는 읽은 block수, excutions는 해당 sql의 수행횟수, cpu_time은 연산시간이고, elapsed_time은 해당 SQL을 수행하는데 소요된 총 시간이다. 이 값들을 보면 어떤 SQL이 문제가 있는지 짐작할 수 있다.
+<br/>
+
 10. V$SESSION : 현재 INSTANCE에 연결된 SESSION을 볼 수 있다. 단, SESSION은 끊어졌다고 바로 삭제되는 것이 아니라 INACTIVE로 남아있으니 유의.
     - STATUS : ACTIVE와 INACTIVE로 나뉘며, 현재 SESSION이 살아있는지를 보여준다.
     - SID, SERIAL# : 개별 SESSION을 구분해주는 KEY라고 볼 수 있다.
     - SQL_ID : SESSION이 잡고있는 SQL_ID를 볼 수 있다. locking SESSION이 있을때 어떤 SQL이 문제인지 확인하려면 이 값을 조건으로 V$SQL 테이블을 조회하면 된다.
     - EVENT : SESSION이 어떤 EVENT를 발생시키는지를 볼 수 있다.
+<br/>
+
 11. V$LOCKED_OBJECTS : 현재 LOCK이된 객체들을 볼 수 있다. 
     - LOCKED_MODE : ORACLE은 4개단계의 LOCK을 제공한다. 어떤 LOCK이냐에 따라 문제가 생길수도 안생길수도 있으니 확인이 필요하다.
+<br/>
+
 12. V$PARAMETER : DB의 PARAMETER들을 볼 수 있다.
     - 성격상, COLUMN값보단 NAME을 주의깊게 봐야한다. 특히, nls% 관련은 자주 사용하게 되며 cpu_count나 thread 등의 대한 정보는 parallel 처리시 필수적으로 확인해야 한다.
 
