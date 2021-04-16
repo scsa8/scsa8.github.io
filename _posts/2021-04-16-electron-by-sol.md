@@ -274,12 +274,12 @@ $ npx electron-builder build
 
 그러면 해당 경로에 dist 폴더가 생성되고 윈도우 설치파일이 생성된다. 해당 파일을 설치하면 exe 파일로 윈도우 애플리케이션을 실행할 수 있다.
 
-## 정리
+# 정리
 일을 하다보면 간단한 데스크톱 애플리케이션이 필요할때가 종종 생긴다. 매크로를 만든다거나 위처럼 엑셀을 파싱한다거나 필요에 따라 API를 호출하여 사용하는 애플리케이션들이 필요하다.<br>
 파이썬도 좋지만 자바스크립트와 Node.js의 개념만 있으면 일렉트론을 사용하여 데스크톱 애플리케이션(심지어 크로스플랫폼을 지원하는)을 손쉽게 만들 수 있다.<br>
 심심하면 해보는 것을 추천한다.
 
-## Reference
+# Reference
 - 공식문서 <a href='https://www.electronjs.org/docs'>https://www.electronjs.org/docs</a>
-- <a href='https://www.samsungsds.com/kr/insights/1239178_4627.html>https://www.samsungsds.com/kr/insights/1239178_4627.html</a>
+- <a href='https://www.samsungsds.com/kr/insights/1239178_4627.html'>https://www.samsungsds.com/kr/insights/1239178_4627.html</a>
 - <a href='https://cyberx.tistory.com/206'>https://cyberx.tistory.com/206</a>
