@@ -37,6 +37,20 @@ category: Javascript
 그리고 렌더러 프로세스에서 네이티브 API는 직접 호출이 불가능하며 오로지 메인 프로세스에 요청하여 실행할 수 있다.
 <img src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FboSdbW%2FbtqBg8ou4He%2FXdrW3m4fvLkcOnOYOf6ox0%2Fimg.png'>
 
+## 장점
+- 낮은 진입장벽
+- 개발 속도 향상
+- 크로스 플랫폼 지원
+- 풍부한 OS 네이티브 API를 가진 런타임 제공
+- 써드파티 지원
+- 노드 접근 권한 관리
+- 빌드 툴과 인스톨러 제공
+
+## 단점
+- 큰 설치 파일 용량
+- 상대적으로 느린 속도
+- 보안은 개발자의 책임
+- 크로스 플랫폼 빌드
 
 ## 일렉트론 시작하기
 그러면 실제 예제를 통해 한번 만들어보자
@@ -266,4 +280,5 @@ $ npx electron-builder build
 
 ## Reference
 - 공식문서 https://www.electronjs.org/docs
+- https://www.samsungsds.com/kr/insights/1239178_4627.html
 - https://cyberx.tistory.com/206
