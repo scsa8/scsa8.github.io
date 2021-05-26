@@ -30,7 +30,7 @@ category: SPRING
 <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FUOabX%2FbtqEJBBNixH%2FPGDv64FTKaBSLzMiiXkA3K%2Fimg.png">
 
 - 스프링시큐리티는 서블릿 필터 체인을 자동으로 구성하고 요청을 거치게 한다. 필터들이 굉장히 많다... 그 중에 필요한 필터들만 사용한다.
-
+<img src="https://media.vlpt.us/images/sa833591/post/22bfb140-02b5-4fcf-aeed-8900d76044df/SecurityFilterChain2.JPG">
 
 ## 로그인 인증구조(서버기반 인증)
 1. Http 요청이 들어오면 AuthenticationFilter가 http 서블릿 리퀘스트에서 사용자가 보낸 정보를 인터셉트한다.
