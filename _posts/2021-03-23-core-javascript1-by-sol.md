@@ -7,6 +7,7 @@ tags:
     - Javascript
     - Front-end
     - 코어 자바스크립트
+    - Dev. Sol
 author: Dev. Sol
 category: Javascript
 ---
