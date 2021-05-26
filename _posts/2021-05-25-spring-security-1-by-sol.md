@@ -75,6 +75,10 @@ category: SPRING
 
 <img src='/assets/images/sol/20210525/rsa_diagram.png'>
 
+#### JWT(Json Web Token)
+<a href='https://jwt.io/introduction'>JWT 공홈</a> 참고
+
+
 ### 작동 원리
 - 유저가 아이디와 비밀번호로 로그인을 수행
 - 서버측에서 해당 정보 검증
