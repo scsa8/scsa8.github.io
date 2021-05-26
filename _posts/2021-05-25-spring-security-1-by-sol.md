@@ -68,8 +68,11 @@ category: SPRING
 - 무결성 (Integrity) : 부적절한 정보 변경이나 파기 없이 정확하고 완전하게 보존
 - 가용성 (Availability) : 시기적절하면서 신뢰할 수 있는 정보로 접근과 사용
 
-#### RSA
+#### RSA 암호화
+- 암호화 - 공개 키(Public Key), 복호화 - 개인키 (Private Key)
+- 전자 서명 - 개인 키(Private Key), 서명 검증 - 공개 키(Public Key)
 
+<img src='/assets/images/sol/20210525/rsa_diagram'>
 
 ### 작동 원리
 - 유저가 아이디와 비밀번호로 로그인을 수행
