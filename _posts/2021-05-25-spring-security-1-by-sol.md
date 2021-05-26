@@ -72,7 +72,7 @@ category: SPRING
 - 암호화 - 공개 키(Public Key), 복호화 - 개인키 (Private Key)
 - 전자 서명 - 개인 키(Private Key), 서명 검증 - 공개 키(Public Key)
 
-<img src='/assets/images/sol/20210525/rsa_diagram'>
+<img src='/assets/images/sol/20210525/rsa_diagram.png'>
 
 ### 작동 원리
 - 유저가 아이디와 비밀번호로 로그인을 수행
