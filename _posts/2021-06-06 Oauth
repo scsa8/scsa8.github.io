@@ -1,0 +1,38 @@
+---
+layout: post
+title: Oauth & Oauth 2.0 - 기본 개념
+description: 많이 사용 되는 Oauth&Oauth2.0에 대해 알아보자
+tags: 
+    - Oauth
+    - Oauth2.0
+    - Backend
+    - Dev. ha
+author: Dev. ha
+category: SPRING
+---
+
+요즘 앱 또는 서비스, 사이트에 가입할 때 Google로 가입하기, Kakao로 가입하기 등과 같은 버튼을 자주 접할 수 있다. <br>
+위와 같이 가입을 시도할 때 사용하는 것을 Oauth2.0이라고 들은 적이 있다. 하지만 정확한 개념에 대해서는 헷갈리는 경우가 대다수였다. <br>
+이번에 스프링 시큐리티(Spring Security)를 공부하며 Oauth에 대해 다시 접하며 한번 자세하게 정리해보고 싶어 포스팅을 하게 되었다. <br>
+이전 포스팅 Dev. Sol의 포스팅인 스프링 시큐리티(Spring Security)에서 작성된 개념들을 기반으로 작성되었으니, 혹 읽지 않았을 경우 미리 읽고 포스팅을 보는 것을 추천한다.
+
+# OAuth 
+> - 간단하게 말해서 기본 인증인 아이디/비밀번호를 사용하는 것이 아니라, 다른 웹사이트 상의 정보를 가지고 인증&인가를 받을 수 있는 인증방식이라고 볼 수 있다.<br>
+    예를 들어, A 서비스를 사용하기 위해 Kakao로 로그인/가입하기를 이용하는 것이라고 볼 수 있다.
+> - 유사한 것으로 Open ID가 있다. 하지만 이는 인증이 주요 목적이며, Oauth는 인가가 주요 목적인 프로토콜이라고 할 수 있다.
+    아래는 위키백과에서 찾은 OpenID 와 Oauth의 차이를 볼 수 있는 그림이다.
+ <img src="https://commons.wikimedia.org/wiki/File:OpenIDvs.Pseudo-AuthenticationusingOAuth.svg">
+ <img src="https://commons.wikimedia.org/wiki/File:OpenIDvs.Pseudo-AuthenticationusingOAuth.svg"> 
+> - 기존에는 각 애플리케이션들이 각자 개발한 방법대로 사용자를 인증&인가해주었지만, 이를 표준화한 인증방식이 Oauth 라고 볼 수 있다.
+
+<br><br>
+
+# OAuth 대표 용어
+> - User(사용자) : 
+> -
+
+<br><br>
+# Reference 
+- https://ko.wikipedia.org/wiki/OAuth
+- https://velog.io/@undefcat/OAuth-2.0-%EA%B0%84%EB%8B%A8%EC%A0%95%EB%A6%AC
+- https://showerbugs.github.io/2017-11-16/OAuth-%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%BC%EA%B9%8C
